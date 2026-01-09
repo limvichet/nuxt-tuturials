@@ -1,3 +1,5 @@
+@import "style.less"
+
 # Vsocode extension
 
 VS Code Extensions សំខាន់ៗសម្រាប់ Nuxt
@@ -22,3 +24,5 @@ VS Code Extensions សំខាន់ៗសម្រាប់ Nuxt
 7. **Path Intellisense**
     - Auto-complete file paths
     - មានប្រយោជន៍សម្រាប់ components, assets
+
+@import "footer.md"

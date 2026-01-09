@@ -1,0 +1,104 @@
+
+* {
+  -webkit-print-color-adjust: exact !important;   /* Chrome, Safari, Edge */
+  color-adjust: exact !important;                 /*Firefox*/
+}
+
+.markdown-preview.markdown-preview {
+    font-family: "Krasar", "Khmer OS Siemreap";
+    font-size: 1rem !important;
+    height: calc(100%-4em);
+    #b-bottom {
+      border: none;
+      border-bottom: 1px solid #eaecef;
+      margin-bottom: 25px;
+    }
+    h1 {
+      font-family: "Khmer OS Muol Light", "Khmer OS Siemreap";
+      font-size: 2em;      
+      color: #0290B4; 
+      border-top: 1px solid #eaecef;
+      margin-top: 0;
+      padding-top: 12px;
+      text-align: right;
+    }
+    h2 {
+      font-family: "Khmer OS Muol Light", "Khmer OS Siemreap";
+      font-size: 1.7rem;
+      color: #066787; 
+      padding-top: 10px;
+    }
+    h3 {
+      font-size: 1.4rem;
+      color: #122140; 
+    }
+    h4 {
+      font-size: 1.1rem;
+      color: #11395D;      
+    }
+    h5 {
+      font-size: 0.9rem;
+      color: #11395D;       
+    }   
+    h6 {
+      font-size: 0.6rem;
+      color: #082743; 
+    }   
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+    }
+    tr, td, th {
+      width: 50% !important;
+      border: none !important;
+    }   
+    p {
+      margin-top: 0;
+      margin-bottom: 10px;
+      text-align: justify;
+      text-indent: 30px;
+    }
+    footer {
+      width: 860px;
+      height: 2.6em;
+      position: fixed;
+      bottom: 0px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-top: 2px solid #11395D;
+      margin-top: 100px !important;
+      padding-top: .2em;
+      font-size: .8rem;
+      text-align: center;
+      color: #122140; 
+    }
+    footer p {
+      text-align: center !important;
+    }
+    img {
+      width: 650px;
+    }
+    mark{
+      background-color: #00A6ED;      
+      box-shadow: 1px 2px 3px rgba(175,74,118, 1);
+    }
+    code, #c-red{
+      color: #F1356D;
+      font-family: "Krasar", "Khmer OS Siemreap";
+    }
+    #text-ident-30 {
+      text-indent: 30px;
+    }
+}     
+
+@page{margin: 2cm 2cm .5cm 2.5cm; size: A4;}
+@media print{
+  body{width: 210mm; height: 297mm;margin-bottom: .2cm; size: A4;break-inside: avoid!important;}
+  h1,h2,h3,h4,h5,h6,p,ul,ol,li,img,pre span,hr{break-inside: avoid!important;}
+}
+
+
+
+
+
