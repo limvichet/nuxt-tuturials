@@ -1,0 +1,28 @@
+/* app/assets/css/main.css */
+@import "tailwindcss";
+
+/* Page Transitions */
+.page-enter-active, .page-leave-active {
+  transition: all 0.3s ease;
+}
+.page-enter-from, .page-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@theme {
+  /* This tells Tailwind to use the "dark" class strategy */
+  --variant-dark: .dark &;
+}
+
+@variant dark (&:where(.dark, .dark *));
+
+/* Global Smoothness */
+body {
+  @apply bg-white text-gray-400 transition-colors duration-300;
+}
+
+/* Specific background for the Dark Mode root */
+.dark body {
+  @apply bg-gray-200 text-gray-100;
+}

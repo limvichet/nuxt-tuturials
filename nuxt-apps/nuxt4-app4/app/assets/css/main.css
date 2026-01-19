@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+:root{
+  /* custom fonts */
+  --font-sans-en: "Roboto";
+  --font-sans-kh: "Kantumruy Pro";
+  --font-sans-kh-moul: "Moul";
+  --font-sans-serif: var(--font-sans-en), var(--font-sans-kh), system-ui, sans-serif;
+}
+
+@layer base {
+  :root {
+    /* Define your hex code here */
+    --public-red: 204 0 0; /* RGB format allows for opacity like bg-public-red/50 */
+  }
+}
+
+/* This allows you to use class="text-public-red bg-public-red" */
+@theme {
+  --color-public-red: rgb(var(--public-red));
+  --font-sans: var(--font-sans-serif);
+  --font-moul: var(--font-sans-kh-moul);
+}
