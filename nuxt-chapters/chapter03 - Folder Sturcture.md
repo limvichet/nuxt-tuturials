@@ -58,7 +58,7 @@ nuxt-project/
 ```
 
 #### 1.1 app.vue (The Root Component)
-```vue
+```html
 <template>
   <div>
     <NuxtLayout>
@@ -69,7 +69,7 @@ nuxt-project/
 ```
 
 #### 1.2 components/Header.vue
-```vue
+```html
 <template>
   <header>
     <h1>Nuxt Header Page</h1>
@@ -78,7 +78,7 @@ nuxt-project/
 ```
 
 #### 1.2 components/Sidebar.vue
-```vue
+```html
 <template>
   <aside>
     <ul>
@@ -95,7 +95,7 @@ nuxt-project/
 ```
 
 #### 1.3 components/Footer.vue
-```vue
+```html
 <template>
   <header class="bg-blue-500 text-white p-4">
     © 2026 Nuxt Mini Project
@@ -104,7 +104,7 @@ nuxt-project/
 ```
 
 #### 1.4 layouts/default.vue
-```vue
+```html
 <template>
   <div>
     <!-- Header -->
@@ -126,7 +126,7 @@ nuxt-project/
 ```
 
 #### 1.5 pages/index.vue
-```vue
+```html
 <template>
   <div>
     <h2>Home page</h2>
@@ -137,7 +137,7 @@ nuxt-project/
 
 
 #### 1.6 pages/detail.vue
-```vue
+```html
 <template>
   <div>
     <h2>Detail Page</h2>
@@ -147,7 +147,7 @@ nuxt-project/
 ```
 
 #### 1.7 pages/detail/[id].vue (Dynamic Page)
-```vue
+```html
 <script setup>
   const route = useRoute()
   const id = route.params.id

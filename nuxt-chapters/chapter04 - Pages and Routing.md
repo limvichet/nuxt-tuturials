@@ -27,7 +27,7 @@ Web Development ប្រើប្រាស់ Nuxt 4 ឬ Vue.js, Routing ដើ
 -----| [id].vue
 ```
 
-```vue
+```html
 <script setup>
 const route = useRoute()
 const userId = route.params.id
@@ -45,7 +45,7 @@ const userId = route.params.id
 
 ដើម្បីឆ្លងទៅកាន់ទំព័រផ្សេងៗដោយមិនបាច់ Reload Page យើងប្រើ Component `<NuxtLink>` ជំនួសឱ្យ Tag `<a>`។
 
-```vue
+```html
 <template>
   <nav>
     <NuxtLink to="/">ទៅកាន់ទំព័រដើម</NuxtLink>
@@ -61,7 +61,7 @@ const userId = route.params.id
 - File: `app/pages/[...slug].vue`
 - វានឹងបង្ហាញរាល់ពេលដែល User វាយ URL ឆ្គង។
 
-```vue
+```html
 <script setup>
 const route = useRoute()
 const pathArray = route.params.slug 
@@ -99,7 +99,7 @@ const pathArray = route.params.slug
 - `path`: ជា `URL`
 - `name`: ឈ្មោះរបស់ Route
 
-```vue
+```html
 <script setup>
 const route = useRoute()
 
@@ -117,7 +117,7 @@ console.log(route.query.lang)  // លទ្ធផល: "km"
 
 **useRouter** គឺជា tool សម្រាប់បញ្ជាឱ្យ App របស់អ្នកផ្លាស់ប្តូរទំព័រ 
 
-```vue
+```html
 <script setup>
 const router = useRouter()
 

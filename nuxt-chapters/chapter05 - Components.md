@@ -20,22 +20,23 @@ my-nuxt-app/
 #### 2. ការបង្កើត និងប្រើប្រាស់ Components
 Nuxt 4 នៅតែរក្សាមុខងារ **Auto-import** ដែលមានន័យថាអ្នកមិនចាំបាច់សរសេរ `import` នៅក្នុង `<script>` នោះទេ។
 
-##### 2.1 ឧទាហរណ៍១ Basic Component `app/components/HelloWorld.vue`
-```vue
-<template>
-  <p>Hello world from Nuxt 4</p>
-</template>
-```
+##### ឧទាហរណ៍១ Basic Component 
+- **creat** - app/components/HelloWorld.vue
+  ```vue
+  <template>
+    <p>Hello world from Nuxt 4</p>
+  </template>
+  ```
 
-##### 2.2 use `app/app.vue`
-```vue
-<template>
-  <div>
-    <h1>Welcome Nuxt 4</h1>
-    <HelloWorld />
-  </div>
-</template>
-```
+- **use** - app/app.vue
+  ```vue
+    <template>
+      <div>
+        <h1>Welcome Nuxt 4</h1>
+        <HelloWorld />
+      </div>
+    </template>
+    ```
 
 #### 3. Nested Components
 អ្នកអាចបង្កើត Component នៅក្នុង Folder បន្ថែម ឈ្មោះរបស់វាត្រូវហៅតាមឈ្មោះ Folder បូកនឹងឈ្មោះ File។
@@ -98,246 +99,65 @@ Props គឺជាការបញ្ជូនទិន្នន័យពី **Pa
 </template>
 ```
 
-##### 6. ឧទាហរណ៍ Props
-- Child Component `app/components/ProductCard.vue`
-- Parrent Page `app/pages/products/index.vue)`
-- Dynamic route page `app/pages/products/[id].vue`
+##### ឧទាហរណ៍
 
-##### 6.1 Child Component `app/components/ProductCard.vue`
-```vue
-<script setup lang="ts">
-// កំណត់ Props
-const props = defineProps<{
-  id: number
-  title: string
-  price: number
-  isSoldOut?: boolean
-}>()
-
-// កំណត់ Events
-const emit = defineEmits(['addToCart'])
-
-// Function សម្រាប់ទៅកាន់ទំព័រលម្អិត
-const goToDetail = () => {
-  navigateTo(`/products/${props.id}`)
-}
-
-// Function សម្រាប់ Add to Cart (ឈប់ឱ្យវាទាក់ទងនឹងការ Click លើ Card)
-const onAddToCart = (event: Event) => {
-  event.stopPropagation() // ការពារកុំឱ្យវាហៅ goToDetail ពេលចុចប៊ូតុង
-  emit('addToCart', props.title)
-}
-</script>
-
+- Full codes `products.vue` using tailwindcss
+```html
 <template>
-  <div class="product-card" @click="goToDetail">
-    <div class="badge" v-if="isSoldOut">អស់ស្តុក</div>
-    <h3>{{ title }}</h3>
-    <p class="price">តម្លៃ: ${{ price }}</p>
+  <div class="flex flex-col min-h-screen font-sans bg-white text-[#1d1d1f]">
     
-    <button :disabled="isSoldOut" @click="onAddToCart">
-      {{ isSoldOut ? 'Out of Stock' : 'ថែមក្នុងកន្ត្រក' }}
-    </button>
-  </div>
-</template>
-
-<style scoped>
-.product-card {
-  border: 1px solid #eee;
-  padding: 20px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  background: white;
-}
-.product-card:hover {
-  border-color: #4f46e5;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-.price { color: #059669; font-weight: bold; }
-.badge {
-  position: absolute;
-  top: 10px; right: 10px;
-  background: #ef4444; color: white;
-  font-size: 10px; padding: 2px 8px; border-radius: 20px;
-}
-button {
-  margin-top: 10px;
-  width: 100%;
-  padding: 8px;
-  cursor: pointer;
-  background: #4f46e5; color: white; border: none; border-radius: 6px;
-}
-button:disabled { background: #ccc; cursor: not-allowed; }
-</style>
-```
-
-##### 6.2 Parrent Page `app/pages/products/index.vue)`
-```vue
-<script setup lang="ts">
-interface Product {
-  id: number
-  name: string
-  price: number
-  soldOut: boolean
-}
-
-const products = ref<Product[]>([
-  { id: 1, name: 'iPhone 15 Pro', price: 999, soldOut: false },
-  { id: 2, name: 'MacBook Air M3', price: 1299, soldOut: true },
-  { id: 3, name: 'AirPods Pro', price: 249, soldOut: false }
-])
-
-const handleAddToCart = (name: string) => {
-  alert(`បានបន្ថែម ${name} ទៅក្នុងកន្ត្រក!`)
-}
-</script>
-
-<template>
-  <div class="container">
-    <h1>ហាងទំនិញ</h1>
-    <div class="product-grid">
-      <ProductCard 
-        v-for="item in products" 
-        :key="item.id"
-        :id="item.id" 
-        :title="item.name" 
-        :price="item.price"
-        :is-sold-out="item.soldOut"
-        @add-to-cart="handleAddToCart"
-      />
-    </div>
-  </div>
-</template>
-
-<style scoped>
-.container { max-width: 1000px; margin: auto; padding: 40px; }
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-}
-</style>
-```
-
-##### 6.3 Dynamic route page `app/pages/products/[id].vue`
-```vue
-<script setup lang="ts">
-const route = useRoute()
-const id = route.params.id // ចាប់យក ID ពី URL
-
-// ជាទូទៅយើងទាញទិន្នន័យបន្ថែមតាមរយៈ ID នេះ
-// const { data: product } = await useFetch(`/api/products/${id}`)
-</script>
-
-<template>
-  <div class="detail-container">
-    <button @click="navigateTo('/products')" class="back-btn">← ត្រឡប់ក្រោយ</button>
-    
-    <div class="content">
-      <h1>ព័ត៌មានលម្អិតផលិតផល</h1>
-      <div class="info-card">
-        <h2>លេខកូដទំនិញ: #{{ id }}</h2>
-        <p>នេះគឺជាទំព័រលម្អិតសម្រាប់ផលិតផល ID លេខ {{ id }}។ អ្នកអាចដាក់រូបភាព ការពិពណ៌នាវែងៗ និងមតិយោបល់របស់អ្នកប្រើប្រាស់នៅទីនេះ។</p>
+    <header class="sticky top-0 z-50 bg-black/85 backdrop-blur-md text-white py-3">
+      <div class="max-w-[1000px] mx-auto px-5 flex justify-between items-center">
+        <div class="text-xl font-semibold tracking-tight">Apple Store</div>
+        <nav class="space-x-6">
+          <a href="#" class="text-[0.85rem] opacity-80 hover:opacity-100 transition-opacity">Store</a>
+          <a href="#" class="text-[0.85rem] opacity-80 hover:opacity-100 transition-opacity">Mac</a>
+          <a href="#" class="text-[0.85rem] opacity-80 hover:opacity-100 transition-opacity">iPhone</a>
+          <a href="#" class="text-[0.85rem] opacity-80 hover:opacity-100 transition-opacity">Support</a>
+        </nav>
       </div>
-    </div>
-  </div>
-</template>
-
-<style scoped>
-.detail-container { max-width: 800px; margin: auto; padding: 40px; }
-.back-btn {
-  background: none; border: 1px solid #ccc; padding: 5px 15px;
-  cursor: pointer; border-radius: 5px; margin-bottom: 20px;
-}
-.info-card {
-  background: #f9fafb;
-  padding: 30px;
-  border-radius: 15px;
-  border: 1px dashed #4f46e5;
-}
-</style>
-```
-
-#### 7. Slots
-**Slot** ជាបច្ចេកទេសកម្រិតខ្ពស់អនុញ្ញាតឱ្យ `Child` បញ្ជូនទិន្នន័យទៅឱ្យ Parent ដើម្បបង្ហាញព័ត៍មាននៅលើ Parent
-
-- chid **ListUser.server.vue**
-```vue
-<script setup>
-const users = [{ id: 1, name: 'Sok' }, { id: 2, name: 'Sao' }]
-</script>
-
-<template>
-  <ul>
-    <li v-for="user in users" :key="user.id">
-      <slot name="item" :user="user" />
-    </li>
-  </ul>
-</template>
-```
-
-- Parent **pages/users.vue**
-```vue
-<template>
-  <ListUser>
-    <template #item="{ user }"> <strong>ឈ្មោះ៖ {{ user.name }}</strong>
-    </template>
-  </ListUser>
-</template>
-```
-
-#### 8. Multiple Slots
-
-##### 8.1 create `app/components/BaseCard.vue`
-```vue
-<template>
-  <div class="card">
-    <header v-if="$slots.header" class="card-header">
-      <slot name="header" />
     </header>
 
-    <div class="card-body">
-      <slot />
-    </div>
+    <main class="flex-1 max-w-[1100px] mx-auto px-5 py-20 w-full">
+      <h2 class="text-4xl font-semibold text-center mb-12">Featured Gear</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-[#f5f5f7] p-10 rounded-[24px] text-center hover:scale-[1.02] transition-transform duration-500 ease-out">
+          <img src="/images/iphone17.png" alt="iPhone 15 Pro" class="h-48 mx-auto mb-6 object-contain" />
+          <h3 class="text-xl font-semibold">iPhone 15 Pro</h3>
+          <p class="text-[1.1rem] my-4 font-medium">$999</p>
+          <button class="bg-[#0071e3] text-white px-[18px] py-2 rounded-full font-medium hover:bg-[#0077ed] transition-colors">Buy Now</button>
+        </div>
 
-    <footer v-if="$slots.footer" class="card-footer">
-      <slot name="header" />
-      <slot name="footer" />
+        <div class="bg-[#f5f5f7] p-10 rounded-[24px] text-center opacity-70">
+          <img src="/images/macbook.png" alt="MacBook Air" class="h-48 mx-auto mb-6 object-contain" />
+          <h3 class="text-xl font-semibold">MacBook Air M3</h3>
+          <p class="text-[1.1rem] my-4 font-medium">$1299</p>
+          <span class="text-[#86868b] font-bold text-[0.9rem]">Sold Out</span>
+        </div>
+
+        <div class="bg-[#f5f5f7] p-10 rounded-[24px] text-center hover:scale-[1.02] transition-transform duration-500 ease-out">
+          <img src="/images/airpod.png" alt="AirPods Pro" class="h-48 mx-auto mb-6 object-contain" />
+          <h3 class="text-xl font-semibold">AirPods Pro</h3>
+          <p class="text-[1.1rem] my-4 font-medium">$249</p>
+          <button class="bg-[#0071e3] text-white px-[18px] py-2 rounded-full font-medium hover:bg-[#0077ed] transition-colors">Buy Now</button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-[#f5f5f7] text-[#6e6e73] py-5 border-t border-[#d2d2d7]">
+      <div class="max-w-[1000px] mx-auto px-5 flex flex-col md:flex-row justify-between text-[0.75rem]">
+        <p>&copy; 2026 Phone Shop Inc. All rights reserved.</p>
+        <div class="flex gap-4 mt-4 md:mt-0">
+          <a href="#" class="hover:underline">Privacy Policy</a>
+          <a href="#" class="hover:underline">Terms of Use</a>
+          <a href="#" class="hover:underline">Sales Policy</a>
+        </div>
+      </div>
     </footer>
   </div>
 </template>
-
-<style scoped>
-.card { border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
-.card-header { padding: 10px; background: #f5f5f5; border-bottom: 1px solid #ddd; font-weight: bold; }
-.card-body { padding: 15px; }
-.card-footer { padding: 10px; background: #fafafa; border-top: 1px solid #ddd; text-align: right; }
-</style>
 ```
 
-##### 8.2 use `app/pages/index.vue`
-ដើម្បីបញ្ជូន Content ទៅកាន់ **Slot** នីមួយៗ យើងប្រើ attribute `#` សញ្ញាខ្លីនៃ `v-slot:`
-```vue
-<template>
-  <div class="p-10">
-    
-    <BaseCard>
-      <template #header>
-        <h3>កាតផលិតផលថ្មី</h3>
-      </template>
-
-      <p>នេះគឺជាព័ត៌មានលំអិតអំពីផលិតផលដែលយើងទើបតែនឹងនាំចូលមកកាន់ហាងរបស់យើង។</p>
-      <img src="https://via.placeholder.com/150" alt="Product" />
-
-      <template #footer>
-        <button class="bg-blue-500 text-white px-4 py-1 rounded">មើលបន្ថែម</button>
-      </template>
-    </BaseCard>
-
-  </div>
-</template>
-```
 
 @import "footer.md"
