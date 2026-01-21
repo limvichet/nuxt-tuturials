@@ -11,8 +11,7 @@
 my-nuxt-app/
 ├── app/
 │   ├── components/
-│   │   ├── AppHeader.vue
-│   │   └── BaseButton.vue
+│   │   ├── HelloWorld.vue
 │   └── app.vue
 ├── nuxt.config.ts
 └── package.json
@@ -21,17 +20,11 @@ my-nuxt-app/
 #### 2. ការបង្កើត និងប្រើប្រាស់ Components
 Nuxt 4 នៅតែរក្សាមុខងារ **Auto-import** ដែលមានន័យថាអ្នកមិនចាំបាច់សរសេរ `import` នៅក្នុង `<script>` នោះទេ។
 
-##### 2.1 create Component `app/components/MyButton.vue`
+##### 2.1 ឧទាហរណ៍១ Basic Component `app/components/HelloWorld.vue`
 ```vue
 <template>
-  <button class="btn">
-    <slot /> 
-  </button>
+  <p>Hello world from Nuxt 4</p>
 </template>
-
-<style scoped>
-.btn { background: blue; color: white; padding: 10px; border-radius: 5px; }
-</style>
 ```
 
 ##### 2.2 use `app/app.vue`
@@ -39,7 +32,7 @@ Nuxt 4 នៅតែរក្សាមុខងារ **Auto-import** ដែល�
 <template>
   <div>
     <h1>Welcome Nuxt 4</h1>
-    <MyButton>Click me</MyButton>
+    <HelloWorld />
   </div>
 </template>
 ```
