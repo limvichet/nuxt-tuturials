@@ -1,5 +1,33 @@
+<script setup>
+
+import AppHeader from '~/components/AppHeader.vue'
+
+import { useScrollAnimation } from '@/composables/useScrollAnimation'
+useScrollAnimation()
+
+
+
+
+</script>
+
 <template>
-    <div>
-        <h1 class="text-center mt-2">Home Page</h1>
+    <div class="flex flex-col min-h-screen font-sans bg-white text-[#1d1d1f]">
+
+        <!-- Header -->
+        <app-header />  
+
+        <!-- Hero -->
+        <app-hero />
+
+        <!-- Features -->
+        <app-feature />
+
+        <!-- Products -->
+        <app-product />
+
+        <!-- Footer -->
+        <AppFooter />
+
     </div>
 </template>
+

@@ -1,8 +1,6 @@
-<script setup>
+<script setup type="ts">
     const route = useRoute();
-    console.log(route);
     let code = route.params.code;
-
 </script>
 
 <template>

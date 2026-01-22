@@ -1,23 +1,85 @@
 @import "tailwindcss";
 
-:root{
-  /* custom fonts */
-  --font-sans-en: "Roboto";
-  --font-sans-kh: "Kantumruy Pro";
-  --font-sans-kh-moul: "Moul";
-  --font-sans-serif: var(--font-sans-en), var(--font-sans-kh), system-ui, sans-serif;
-}
+   /* Keyframes */
+    @keyframes fadeUp {
+        0% {
+            opacity: 0;
+            transform: translateY(40px);
+        }
 
-@layer base {
-  :root {
-    /* Define your hex code here */
-    --public-red: 204 0 0; /* RGB format allows for opacity like bg-public-red/50 */
-  }
-}
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
-/* This allows you to use class="text-public-red bg-public-red" */
-@theme {
-  --color-public-red: rgb(var(--public-red));
-  --font-sans: var(--font-sans-serif);
-  --font-moul: var(--font-sans-kh-moul);
-}
+    @keyframes fadeDown {
+        0% {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    /* Animation classes */
+    .fade-up {
+        animation: fadeUp 1s ease-out forwards;
+    }
+
+    .fade-down {
+        animation: fadeDown 0.6s ease-out forwards;
+    }
+
+    .fade-in {
+        animation: fadeIn 1.5s ease-out forwards;
+    }
+
+    /* Scroll-triggered animation */
+    .fade-in-on-scroll {
+        animation: fadeUp 0.8s ease-out forwards;
+    }
+
+    /* Optional delays */
+    .delay-200 {
+        animation-delay: 0.2s;
+    }
+
+    .delay-300 {
+        animation-delay: 0.3s;
+    }
+
+    .delay-500 {
+        animation-delay: 0.5s;
+    }
+
+    /* Slide-down animation for mobile menu */
+    .menu-slide-enter-active,
+    .menu-slide-leave-active {
+        transition: max-height 0.3s ease, opacity 0.3s ease;
+    }
+
+    .menu-slide-enter-from,
+    .menu-slide-leave-to {
+        max-height: 0;
+        opacity: 0;
+    }
+
+    .menu-slide-enter-to,
+    .menu-slide-leave-from {
+        max-height: 500px;
+        opacity: 1;
+    }

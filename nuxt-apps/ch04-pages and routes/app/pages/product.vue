@@ -1,102 +1,139 @@
+<script setup>
+  import { ref, watch, onMounted } from 'vue'
+
+  const isMenuOpen = ref(false)
+
+  // Disable body scroll when menu is open
+  watch(isMenuOpen, (val) => {
+    document.body.style.overflow = val ? 'hidden' : ''
+  })
+
+  // Animate on scroll
+  onMounted(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          // If the element is visible in the viewport
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in-on-scroll') // Trigger animation
+            observer.unobserve(entry.target) // Stop observing once animated
+          }
+        })
+      },
+      { threshold: 0.2 } // 20% of element visible triggers animation
+    )
+
+    // Observe all elements with class "animate-on-scroll"
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el))
+  })
+</script>
+
 <template>
   <div class="flex flex-col min-h-screen font-sans bg-white text-[#1d1d1f]">
 
     <!-- Header -->
-    <header
-      class="sticky top-0 z-50 bg-black/85 backdrop-blur-md text-white py-3
-             animate-fade-down"
-    >
-      <div class="max-w-[1000px] mx-auto px-5 flex justify-between items-center">
+    <header class="sticky top-0 z-50 bg-black/85 backdrop-blur-md text-white py-3">
+      <div class="max-w-[1000px] mx-auto px-5 flex justify-between items-center relative z-50">
         <h1 class="text-xl font-semibold tracking-tight">Apple Store</h1>
-        <nav class="space-x-6">
-          <a class="nav-link">Store</a>
-          <a class="nav-link">Mac</a>
-          <a class="nav-link">iPhone</a>
-          <a class="nav-link">Support</a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex space-x-6">
+          <a class="nav-link text-[0.85rem] opacity-80 hover:opacity-100 cursor-pointer">Store</a>
+          <a class="nav-link text-[0.85rem] opacity-80 hover:opacity-100 cursor-pointer">Mac</a>
+          <a class="nav-link text-[0.85rem] opacity-80 hover:opacity-100 cursor-pointer">iPhone</a>
+          <a class="nav-link text-[0.85rem] opacity-80 hover:opacity-100 cursor-pointer">Support</a>
         </nav>
+
+        <!-- Mobile Hamburger / X -->
+        <div class="md:hidden flex items-center relative z-50">
+          <button @click="isMenuOpen = !isMenuOpen" class="focus:outline-none relative z-50">
+            <svg v-if="!isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
       </div>
     </header>
 
-    <!-- Hero -->
-    <section class="bg-black text-white pt-28 pb-24 text-center animate-fade-up">
-      <div class="max-w-[900px] mx-auto px-5">
-        <h2 class="text-5xl md:text-6xl font-semibold mb-6">
-          iPhone 15 Pro
-        </h2>
+    <!-- Mobile Menu Overlay -->
+    <transition name="menu-slide">
+      <div
+        v-if="isMenuOpen"
+        class="fixed inset-0 z-40 bg-black/90 text-white overflow-y-auto"
+        @click="isMenuOpen = false"
+      >
+        <div
+          class="flex flex-col items-center justify-start py-20 space-y-6 px-5 min-h-screen"
+          @click.stop
+        >
+          <a @click="isMenuOpen = false" class="cursor-pointer hover:underline text-xl">Store</a>
+          <a @click="isMenuOpen = false" class="cursor-pointer hover:underline text-xl">Mac</a>
+          <a @click="isMenuOpen = false" class="cursor-pointer hover:underline text-xl">iPhone</a>
+          <a @click="isMenuOpen = false" class="cursor-pointer hover:underline text-xl">Support</a>
+        </div>
+      </div>
+    </transition>
 
-        <p class="text-xl text-gray-400 mb-8">
-          Titanium. So strong. So light. So Pro.
-        </p>
+    <!-- Hero -->
+    <section class="bg-black text-white pt-28 pb-24 text-center animate-on-scroll">
+      <div class="max-w-[900px] mx-auto px-5">
+        <h2 class="text-5xl md:text-6xl font-semibold mb-6">iPhone 15 Pro</h2>
+        <p class="text-xl text-gray-400 mb-8">Titanium. So strong. So light. So Pro.</p>
 
         <div class="flex justify-center gap-6 mb-12">
-          <button class="btn-primary">Buy</button>
-          <button class="btn-link">Learn more →</button>
+          <button class="bg-[#0071e3] text-white px-5 py-2 rounded-full transition transform hover:scale-105">Buy</button>
+          <button class="text-[#2997ff] hover:underline transition cursor-pointer">Learn more →</button>
         </div>
 
-        <img
-          src="/images/iphone17.png"
-          class="mx-auto max-h-[420px] image-hover"
-        />
+        <img src="/images/iphone17.png" class="transition duration-500 hover:scale-110 mx-auto max-h-[420px]" />
       </div>
     </section>
 
     <!-- Features -->
-    <section class="py-24 animate-fade-up delay-200">
+    <section class="py-24 animate-on-scroll delay-200">
       <div class="max-w-[1100px] mx-auto px-5 text-center">
-        <h2 class="text-4xl font-semibold mb-14">
-          Why iPhone 15 Pro
-        </h2>
-
+        <h2 class="text-4xl font-semibold mb-14">Why iPhone 15 Pro</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-          <div class="feature-card">
-            <div class="feature-icon">🛡️</div>
+          <div class="feature-card animate-on-scroll">
+            <div class="feature-icon text-5xl transition duration-500 hover:scale-125 hover:rotate-6">🛡️</div>
             <h3 class="feature-title">Titanium Design</h3>
-            <p class="feature-text">
-              Aerospace-grade titanium makes it strong and lightweight.
-            </p>
+            <p class="feature-text">Aerospace-grade titanium makes it strong and lightweight.</p>
           </div>
-
-          <div class="feature-card">
-            <div class="feature-icon">⚡</div>
+          <div class="feature-card animate-on-scroll">
+            <div class="feature-icon text-5xl transition duration-500 hover:scale-125 hover:rotate-6">⚡</div>
             <h3 class="feature-title">A17 Pro Chip</h3>
-            <p class="feature-text">
-              Incredible performance with amazing efficiency.
-            </p>
+            <p class="feature-text">Incredible performance with amazing efficiency.</p>
           </div>
-
-          <div class="feature-card">
-            <div class="feature-icon">📷</div>
+          <div class="feature-card animate-on-scroll">
+            <div class="feature-icon text-5xl transition duration-500 hover:scale-125 hover:rotate-6">📷</div>
             <h3 class="feature-title">Pro Camera</h3>
-            <p class="feature-text">
-              Cinematic photos and stunning 4K Pro video.
-            </p>
+            <p class="feature-text">Cinematic photos and stunning 4K Pro video.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Products -->
-    <main class="flex-1 max-w-[1100px] mx-auto px-5 py-20 w-full animate-fade-up delay-300">
-      <h2 class="text-4xl font-semibold text-center mb-12">
-        Featured Gear
-      </h2>
+    <main class="flex-1 max-w-[1100px] mx-auto px-5 py-20 w-full animate-on-scroll delay-300">
+      <h2 class="text-4xl font-semibold text-center mb-12">Featured Gear</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="product-card">
+        <div class="bg-[#f5f5f7] p-10 rounded-[24px] text-center transition duration-500 hover:-translate-y-2 hover:scale-105 hover:shadow-2xl">
           <img src="/images/iphone17.png" class="product-img" />
           <h3 class="product-title">iPhone 15 Pro</h3>
           <p class="product-price">$999</p>
           <button class="btn-primary-sm">Buy Now</button>
         </div>
-
-        <div class="product-card opacity-70">
+        <div class="bg-[#f5f5f7] p-10 rounded-[24px] text-center transition duration-500 hover:-translate-y-2 hover:scale-105 hover:shadow-2xl opacity-70">
           <img src="/images/macbook.png" class="product-img" />
           <h3 class="product-title">MacBook Air M3</h3>
           <p class="product-price">$1299</p>
           <span class="sold-out">Sold Out</span>
         </div>
-
-        <div class="product-card">
+        <div class="bg-[#f5f5f7] p-10 rounded-[24px] text-center transition duration-500 hover:-translate-y-2 hover:scale-105 hover:shadow-2xl">
           <img src="/images/airpod.png" class="product-img" />
           <h3 class="product-title">AirPods Pro</h3>
           <p class="product-price">$249</p>
@@ -105,49 +142,14 @@
       </div>
     </main>
 
-    <!-- Checkout -->
-    <section class="bg-[#f5f5f7] py-24 animate-fade-up delay-500">
-      <div class="max-w-[900px] mx-auto px-5">
-        <div class="bg-white rounded-[28px] p-10 hover-lift">
-          <h2 class="text-3xl font-semibold mb-8 text-center">
-            Complete Your Purchase
-          </h2>
-
-          <div class="flex flex-col md:flex-row gap-10 items-center">
-            <img src="/images/iphone17.png" class="h-56 image-hover" />
-
-            <div class="flex-1">
-              <h3 class="text-2xl font-semibold mb-2">
-                iPhone 15 Pro
-              </h3>
-
-              <p class="text-[#6e6e73] mb-4">
-                256GB · Natural Titanium
-              </p>
-
-              <div class="flex gap-4 mb-6 items-center">
-                <span class="text-xl font-semibold">$999</span>
-                <span class="text-sm text-[#6e6e73]">Free shipping</span>
-              </div>
-
-              <div class="flex gap-4">
-                <button class="btn-primary">Checkout</button>
-                <button class="btn-outline">Add to Cart</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Footer -->
-    <footer class="footer animate-fade-in">
+    <footer class="bg-[#f5f5f7] text-[#6e6e73] py-5 border-t border-gray-300 animate-on-scroll">
       <div class="max-w-[1000px] mx-auto px-5 flex flex-col md:flex-row justify-between text-xs">
         <p>© 2026 Phone Shop Inc. All rights reserved.</p>
         <div class="flex gap-4 mt-3 md:mt-0">
-          <a class="footer-link">Privacy</a>
-          <a class="footer-link">Terms</a>
-          <a class="footer-link">Sales</a>
+          <a class="footer-link hover:underline">Privacy</a>
+          <a class="footer-link hover:underline">Terms</a>
+          <a class="footer-link hover:underline">Sales</a>
         </div>
       </div>
     </footer>
@@ -155,72 +157,6 @@
   </div>
 </template>
 
-<style scoped>
-/* Animations */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
 
-/* Animation classes */
-.animate-fade-up { animation: fadeUp 1s ease-out forwards; }
-.animate-fade-down { animation: fadeDown 0.6s ease-out forwards; }
-.animate-fade-in { opacity: 0; animation: fadeIn 1.5s ease-out forwards; }
-.delay-200 { animation-delay: .2s; }
-.delay-300 { animation-delay: .3s; }
-.delay-500 { animation-delay: .5s; }
 
-/* Reusable UI */
-.nav-link { font-size: .85rem; opacity: .8; transition: .3s; }
-.nav-link:hover { opacity: 1; }
 
-.btn-primary {
-  background:#0071e3; color:white;
-  padding:.75rem 2rem; border-radius:999px;
-  transition:.3s;
-}
-.btn-primary:hover { transform:scale(1.05); box-shadow:0 10px 25px rgba(0,0,0,.2); }
-.btn-primary:active { transform:scale(.95); }
-
-.btn-primary-sm {
-  background:#0071e3; color:white;
-  padding:.5rem 1.25rem; border-radius:999px;
-  transition:.3s;
-}
-.btn-primary-sm:hover { transform:scale(1.05); }
-
-.btn-outline {
-  border:1px solid #0071e3; color:#0071e3;
-  padding:.75rem 2rem; border-radius:999px;
-  transition:.3s;
-}
-.btn-outline:hover { background:#0071e3; color:white; }
-
-.btn-link { color:#2997ff; transition:.3s; }
-.btn-link:hover { text-decoration:underline; }
-
-.image-hover { transition:.5s; }
-.image-hover:hover { transform:scale(1.1); }
-
-.product-card {
-  background:#f5f5f7; padding:2.5rem; text-align:center;
-  border-radius:24px; transition:.5s;
-}
-.product-card:hover { transform:translateY(-8px) scale(1.03); box-shadow:0 20px 40px rgba(0,0,0,.15); }
-
-.product-img { height:12rem; margin:auto; margin-bottom:1.5rem; transition:.5s; }
-.product-card:hover .product-img { transform:scale(1.1); }
-
-.feature-icon { font-size:3rem; transition:.5s; }
-.feature-icon:hover { transform:scale(1.3) rotate(5deg); }
-
-.footer { background:#f5f5f7; color:#6e6e73; padding:1.25rem; border-top:1px solid #ddd; }
-.footer-link:hover { text-decoration:underline; }
-</style>

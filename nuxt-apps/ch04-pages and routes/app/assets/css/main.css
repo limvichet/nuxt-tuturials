@@ -1,182 +1,44 @@
 @import "tailwindcss";
 
 
-/* ===============================
-   Animations
-================================ */
+/* Keyframes */
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(-20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
-/* ===============================
-   Animation utility classes
-================================ */
-.animate-fade-up {
-  animation: fadeUp 1s ease-out forwards;
-}
+/* Animation classes */
+.fade-up { animation: fadeUp 1s ease-out forwards; }
+.fade-down { animation: fadeDown 0.6s ease-out forwards; }
+.fade-in { animation: fadeIn 1.5s ease-out forwards; }
 
-.animate-fade-down {
-  animation: fadeDown 0.6s ease-out forwards;
-}
+/* Scroll-triggered animation */
+.fade-in-on-scroll { animation: fadeUp 0.8s ease-out forwards; }
 
-.animate-fade-in {
+/* Optional delays */
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-500 { animation-delay: 0.5s; }
+
+/* Slide-down animation for mobile menu */
+.menu-slide-enter-active, .menu-slide-leave-active {
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+.menu-slide-enter-from, .menu-slide-leave-to {
+  max-height: 0;
   opacity: 0;
-  animation: fadeIn 1.5s ease-out forwards;
 }
-
-.delay-200 {
-  animation-delay: 0.2s;
-}
-
-.delay-300 {
-  animation-delay: 0.3s;
-}
-
-.delay-500 {
-  animation-delay: 0.5s;
-}
-
-/* ===============================
-   Reusable UI Components
-================================ */
-.nav-link {
-  font-size: 0.85rem;
-  opacity: 0.8;
-  transition: 0.3s;
-}
-
-.nav-link:hover {
+.menu-slide-enter-to, .menu-slide-leave-from {
+  max-height: 500px;
   opacity: 1;
-}
-
-/* Buttons */
-.btn-primary {
-  background: #0071e3;
-  color: white;
-  padding: 0.75rem 2rem;
-  border-radius: 999px;
-  transition: 0.3s;
-}
-
-.btn-primary:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-.btn-primary:active {
-  transform: scale(0.95);
-}
-
-.btn-primary-sm {
-  background: #0071e3;
-  color: white;
-  padding: 0.5rem 1.25rem;
-  border-radius: 999px;
-  transition: 0.3s;
-}
-
-.btn-primary-sm:hover {
-  transform: scale(1.05);
-}
-
-.btn-outline {
-  border: 1px solid #0071e3;
-  color: #0071e3;
-  padding: 0.75rem 2rem;
-  border-radius: 999px;
-  transition: 0.3s;
-}
-
-.btn-outline:hover {
-  background: #0071e3;
-  color: white;
-}
-
-.btn-link {
-  color: #2997ff;
-  transition: 0.3s;
-}
-
-.btn-link:hover {
-  text-decoration: underline;
-}
-
-/* Images */
-.image-hover {
-  transition: 0.5s;
-}
-
-.image-hover:hover {
-  transform: scale(1.1);
-}
-
-/* Cards */
-.product-card {
-  background: #f5f5f7;
-  padding: 2.5rem;
-  text-align: center;
-  border-radius: 24px;
-  transition: 0.5s;
-}
-
-.product-card:hover {
-  transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.product-img {
-  height: 12rem;
-  margin: auto;
-  margin-bottom: 1.5rem;
-  transition: 0.5s;
-}
-
-.product-card:hover .product-img {
-  transform: scale(1.1);
-}
-
-/* Features */
-.feature-icon {
-  font-size: 3rem;
-  transition: 0.5s;
-}
-
-.feature-icon:hover {
-  transform: scale(1.3) rotate(5deg);
-}
-
-/* Footer */
-.footer {
-  background: #f5f5f7;
-  color: #6e6e73;
-  padding: 1.25rem;
-  border-top: 1px solid #ddd;
-}
-
-.footer-link:hover {
-  text-decoration: underline;
 }
