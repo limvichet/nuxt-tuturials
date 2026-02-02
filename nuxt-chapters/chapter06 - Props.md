@@ -32,7 +32,7 @@ Props គឺជាការបញ្ជូនទិន្នន័យពី **Pa
 </template>
 ```
 
-##### 1.1 create parent page in `pages\aposts.vue`
+##### 1.2 create parent page in `pages\aposts.vue`
 ```html
 <template>
   <div class="min-h-screen bg-gray-50 font-sans">
@@ -174,7 +174,7 @@ const posts: Post[] = [
 
             <!-- Posts (left) -->
             <main class="flex-1 space-y-6">
-                <PostCard v-for="(post, index) in posts"    
+                <DPostCard v-for="(post, index) in posts"    
                   :key="index" 
                   :title="post.title" 
                   :content="post.content" 
@@ -288,7 +288,7 @@ const posts: PostItem[] = [
       
       <!-- Posts (left) -->
       <main class="flex-1 space-y-6">
-          <PostCard
+          <CPostCard
           v-for="(post, index) in posts"
           :key="index"
           :title="post.title"
