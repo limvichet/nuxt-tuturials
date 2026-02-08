@@ -8,5 +8,5 @@ export interface NavLink {
 export interface FooterLink {
   id: number;
   label?: string;
-  href?: string;
+  path?: string;
 }

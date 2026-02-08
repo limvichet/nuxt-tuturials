@@ -1,23 +1,16 @@
 <script setup lang="ts">
-import { Article } from '~/data/store';
+import { articles } from '~/data/store';
 
 const route = useRoute();
-const { activeItem } = useArticle();
+// const { activeItem } = useArticle();
 
 // 1. Data Resolution: Find article from state or static data
-const article = computed(() => 
-  activeItem.value ?? Article.find(a => String(a.id) === route.params.id)
-);
+// const article = computed(() => 
+//   activeItem.value ?? articles.find(a => String(a.id) === route.params.id)
+// );
+const article = computed(() => articles.find(a => String(a.id) === route.params.id));
 
-// 2. SEO Meta: Update title and description dynamically
-useHead({
-  title: article.value 
-    ? `${article.value.title} | ${article.value.publication}` 
-    : 'Article Not Found',
-  meta: [
-    { name: 'description', content: article.value?.excerpt ?? '' }
-  ]
-});
+useHead({title: 'Article'});
 </script>
 
 <template>

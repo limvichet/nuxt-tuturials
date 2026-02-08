@@ -1,6 +1,7 @@
 <script setup>
-import { Article } from "~/data/store";
-const articles = Article;
+
+import { articles } from "~/data/store";
+
 </script>
 
 <template>
@@ -51,10 +52,11 @@ const articles = Article;
                         <div class="pt-4 border-t border-gray-700/50 flex justify-between items-center">
                             <span class="text-amber-400 text-xs font-semibold uppercase tracking-wider">{{
                                 article.publication }}</span>
-                            <button @click="handleNavigation(article)"
+                            <NuxtLink :to="`/articles/${article.id}`"
                                 class="text-blue-400 text-sm cursor-pointer flex items-center group-hover:translate-x-1 transition-transform">
                                 Read More →
-                            </button>
+                            </NuxtLink>
+
                         </div>
                     </article>
                 </div>

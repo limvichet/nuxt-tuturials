@@ -1,6 +1,6 @@
 import type { ArticleItem } from "~/types/article";
 
-export const Article: ArticleItem[] = [
+export const articles: ArticleItem[] = [
     {
     id: "1",
     title: "The Art of Minimalism",
